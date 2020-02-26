@@ -28,7 +28,7 @@
 
     <div class="login_form_con">
       <div class="login_title"></div>
-      <form class="login_form">
+      <form class="login_form" action="" method="post">
         <i class="iconfont icon-user"></i>
         <i class="iconfont icon-key"></i>
         <input type="text" class="input_txt" placeholder="邮箱/手机号" />
@@ -37,7 +37,33 @@
       </form>
     </div>
   </div>
-
+  <script>
+    $(function () {
+      $('.input_sub').click(function (e) {
+        e.preventDefault();
+        const user = $('.input_txt').val().trim();
+        const pass = $('.input_pass').val().trim();
+        if (user == "" || pass == "") {
+          alert('老铁，不能为空啊')
+        } else {
+          $.ajax({
+            type: "post",
+            url: "http://localhost:8080/api/v1/admin/user/login",
+            data: {
+              username: user,
+              password: pass,
+            },
+            success: function (response) {
+              if (response.msg == '登录成功') {
+                $('form').prop('action', 'index.html');
+                $('form').submit();
+              }
+            }
+          });
+        }
+      })
+    })
+  </script>
 </body>
 
 </html>
