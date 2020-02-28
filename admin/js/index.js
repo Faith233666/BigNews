@@ -21,6 +21,33 @@ $(function () {
       }
     }
   });
+  //登录失败时的模态框样式
+  $('.gotologin').mouseenter(function () {
+    $(this).css({
+      backgroundColor: 'blue',
+      color: 'white'
+    });
+  })
+  //登录失败时的模态框样式
+  $('.gotologin').mouseleave(function () {
+    $(this).css({
+      backgroundColor: 'blue',
+      color: 'white'
+    });
+  })
+  $('.level01').click(function () {
+    $(this).addClass('active').siblings().removeClass('active');
+    if ($(this).next().hasClass('level02')) {
+      $('.level02').stop().slideToggle();
+      $('.iconfont').stop().toggleClass('rotate0');
+      $('.level02').find('li').eq(0).addClass('active');
+    } else {
+      $('.level02 li').removeClass('active');
+    }
+  })
+  $('.level02 li').click(function () {
+    $(this).addClass('active').siblings().removeClass('active');
+  })
   //退出登录，删除token，并跳回登录页
   $('.logout').click(function () {
     localStorage.removeItem('token');

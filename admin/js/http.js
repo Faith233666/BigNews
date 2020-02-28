@@ -42,20 +42,6 @@
             })
         }
     })
-    //登录失败时的模态框样式
-    $('.gotologin').mouseenter(function () {
-        $(this).css({
-            backgroundColor: 'blue',
-            color: 'white'
-        });
-    })
-    //登录失败时的模态框样式
-    $('.gotologin').mouseleave(function () {
-        $(this).css({
-            backgroundColor: 'blue',
-            color: 'white'
-        });
-    })
     //接口地址封装
     const urls = 'http://localhost:8080/api/v1';
     const bigNew = {
