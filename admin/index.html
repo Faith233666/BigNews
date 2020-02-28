@@ -10,13 +10,37 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/iconfont.css">
     <link rel="stylesheet" href="css/main.css">
-    <script src="./libs/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="./nprogress/nprogress.css">
     <!-- 导入bootstrap的js文件 -->
+    <script src="./libs/jquery-1.12.4.min.js"></script>
     <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./js/index.js"></script>
+    <style>
+        .red
+        {
+            background-color: blue;
+            color: white;
+        }
+    </style>
 </head>
-
 <body>
+    <!-- bootstrap的模态框 -->
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div class="modal-body">
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default red gotologin" data-dismiss="modal">去登录</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
     <div class="sider">
         <a href="#" class="logo"><img src="images/logo02.png" alt="logo"></a>
         <div class="user_info">
@@ -36,7 +60,6 @@
                 <li><a href="#" target="main_frame"><i class="iconfont icon-previewright"></i><span>文章类别管理</span></a>
                 </li>
             </ul>
-
             <div class="level01"><a href="#" target="main_frame"><i
                         class="iconfont icon-comment"></i><span>评论管理</span></a></div>
             <div class="level01" id="user"><a href="#" target="main_frame"><i
@@ -52,8 +75,11 @@
         </div>
         <!-- 右侧主体内容 -->
         <div class="main" id="main_body">
-
         </div>
     </div>
-</body>
+    <script src="./nprogress/nprogress.js"></script>
+    <script src="./js/http.js"></script>
+    <script src="./js/index.js"></script>
+</body> 
+
 </html>

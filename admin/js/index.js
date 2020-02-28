@@ -2,10 +2,12 @@ $(function () {
   //获取用户信息
   $.ajax({
     type: "get",
-    url: "http://localhost:8080/api/v1/admin/user/info",
-    //后台管理系统需要添加请求头token，他是用户唯一的身份标识
-    headers: {
-      Authorization: localStorage.getItem('token')
+    url: bigNew.user_info,
+    beforeSend: function () {
+      NProgress.start();
+    },
+    complete: function () {
+      NProgress.done();
     },
     success: function (response) {
       //当获取信息成功的时候替换网页信息

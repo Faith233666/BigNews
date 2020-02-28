@@ -11,6 +11,7 @@ $(function () {
       $('.modal').modal();
       //修改弹框提示
       $('.modal-body').html('用户名和密码不能为空');
+
     } else {
       $.ajax({
         type: "post",
@@ -25,10 +26,10 @@ $(function () {
             //设置token，用户的唯一身份标识
             localStorage.setItem('token', response.token);
             //页面跳转
-            // window.location.href='index.html';
+            window.location.href = 'index.html';
             //表单跳转
-            $('form').prop('action', 'index.html');
-            $('form').submit();
+            // $('form').prop('action', 'index.html');
+            // $('form').submit();
           } else {
             //bootstrap的模态框
             $('.modal').modal();
