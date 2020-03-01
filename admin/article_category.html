@@ -14,6 +14,20 @@
     <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
     <!-- 引入模板引擎js文件 -->
     <script src="./libs/template-web.js"></script>
+    <!-- 定义模板引擎 -->
+    <script id='list' type="text/html">
+        {{each data}}
+        <tr>
+            <td>{{$value.name}}</td>
+            <td>{{$value.slug}}</td>
+            <td class="text-center">
+                <a href="javascript:void(0)" data-toggle="modal" class=" btn btn-info btn-xs"
+                    data-id='{{$value.id}}'>编辑</a>
+                <a href="javascript:void(0)" class="btn btn-danger btn-xs" data-id='{{$value.id}}'>删除</a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
 </head>
 
 <body>
@@ -21,6 +35,7 @@
         <div class="common_title">
             文章类别管理
         </div>
+        <a href="login.html">回到首页</a>
         <div class="container-fluid common_con">
             <table class="table table-striped table-bordered table-hover mp20 category_table">
                 <thead>
@@ -31,25 +46,51 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>奇趣事</td>
-                        <td>funny</td>
-                        <td class="text-center">
-                            <a href="javascript:void(0)" data-toggle="modal" class=" btn btn-info btn-xs">编辑</a>
-                            <a href="javascript:void(0)" class="btn btn-danger btn-xs">删除</a>
-                        </td>
-                    </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="3" class="text-center">
-                            <a href="javascript:void(0)" class="btn btn-success" id="xinzengfenlei" data-toggle="modal"
-                                data-target="#myModal">新增分类</a>
+                            <a href="" class="btn btn-success" id="xinzengfenlei">新增分类</a>
                         </td>
                     </tr>
                 </tfoot>
             </table>
         </div>
     </div>
+    <!-- bootstrap的模态框 -->
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">文章类别管理</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">分类名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputEmail3" placeholder="名称">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-2 control-label">分类别名</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputPassword3" placeholder="别名">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default red gotologin">关闭</button>
+                    <button type="button" class="btn btn-default red gotologin add"></button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+    <script src="./js/http.js"></script>
+    <script src="./js/article_category.js"></script>
+</body>
 
 </html>

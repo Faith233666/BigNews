@@ -40,17 +40,24 @@ $(function () {
     if ($(this).next().hasClass('level02')) {
       $('.level02').stop().slideToggle();
       $('.iconfont').stop().toggleClass('rotate0');
-      $('.level02').find('li').eq(0).addClass('active');
+      $('.level02').find('li').eq(0).addClass('active').siblings().removeClass('active');
+      $('.level02').find('li').eq(0).children('a')[0].click();
     } else {
       $('.level02 li').removeClass('active');
     }
   })
   $('.level02 li').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
+    $(this).parent().prev().addClass('active').siblings().removeClass('active');
   })
   //退出登录，删除token，并跳回登录页
   $('.logout').click(function () {
     localStorage.removeItem('token');
     window.location.href = 'login.html';
+  })
+  //点击右上角的个人中心，左下角个人中心高亮
+  $('.user_center_link a').eq(0).click(function () {
+    $('.level01').eq(3).addClass('active').siblings().removeClass('active');
+    $('.level02 li').removeClass('active');
   })
 })
