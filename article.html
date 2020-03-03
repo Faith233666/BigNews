@@ -59,8 +59,6 @@
                 当前位置： <a href="#">首页</a> &gt; <a href="#">科技</a> &gt; 文章详情
             </div>
             <h3 class="article_title">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</h3>
-            <div class="article_info">杰克 发布于 2019-05-08 07:08:46&nbsp;&nbsp;&nbsp;分类: 奇趣事&nbsp;&nbsp;&nbsp;阅读:
-                (98)&nbsp;&nbsp;&nbsp;评论: (0)</div>
             <div class="article_con">
 
                 <p>“上天入地”还不够？硅谷“钢铁侠”马斯克名下一家低调的公司最近又融了一大笔钱。</p>
@@ -83,49 +81,16 @@
             <form action="" class="comment_form">
                 <div class="form_group">
                     <label>用户名：</label>
-                    <input type="text" placeholder="请输入用户名" class="comment_name">
+                    <input type="text" placeholder="请输入用户名" class="comment_name" name="author">
                 </div>
                 <div class="form_group">
                     <label>评论内容：</label>
-                    <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
+                    <textarea placeholder="请发表您的评论" class="comment_input" name='content'></textarea>
                 </div>
                 <div class="form_group">
                     <input type="submit" name="" value="评 论" class="comment_sub"></div>
             </form>
-
-            <div class="comment_count">
-                4条评论
-            </div>
-
             <div class="comment_list_con">
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">乔</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">段</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">虚</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">王</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
             </div>
         </div>
         <div class="right_con setfl">
@@ -208,7 +173,93 @@
     <!-- 引入模板引擎js文件 -->
     <script src="./js/template-web.js"></script>
     <script src="./js/jquery-1.12.4.min.js"></script>
+    <!-- 定义模板引擎 -->
+    <!-- 新闻详情 -->
+    <script id='details' type="text/html">
+        <div class="article_info">{{author}} 发布于 {{date}}&nbsp;&nbsp;&nbsp;分类: {{category}}&nbsp;&nbsp;&nbsp;阅读:
+            ({{read}})&nbsp;&nbsp;&nbsp;评论: ({{comments}})</div>
+    </script>
+    <!-- 评论列表 -->
+    <script id='comment' type="text/html">
+        {{each data}}
+        <div class="comment_detail_list">
+            <div class="person_pic fl">{{$value.author.substr(0,1)}}</div>
+            <div class="name_time fl"><b>{{$value.author}}</b><span>{{$value.date}} {{$value.time}}</span></div>
+            <div class="comment_text fl">
+                {{$value.content}}
+            </div>
+        </div>
+        {{/each}}
+    </script>
+    <!-- 评论数量 -->
+    <script id='num' type="text/html">
+        <div class="comment_count">
+            {{data.length}}条评论
+        </div>
+    </script>
+    <script>
+        $(function () {
+            const id = +window.location.search.split('=')[1];
 
+            function details() {
+                $.ajax({
+                    type: "get",
+                    url: "http://localhost:8080/api/v1/index/article",
+                    dataType: "json",
+                    data: {
+                        id: id
+                    },
+                    success: function (response) {
+                        if (response.code == 200) {
+                            const htmlstr = template('details', response.data)
+                            $('.article_title').after(htmlstr);
+                        }
+                    }
+                });
+            }
+            details();
+
+            function comment() {
+                $.ajax({
+                    type: "get",
+                    url: "http://localhost:8080/api/v1/index/get_comment",
+                    data: {
+                        articleId: id
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.code == 200) {
+                            const htmlstr = template('comment', response);
+                            $('.comment_list_con').html(htmlstr);
+                            if ($('.comment_count').length == 1) {
+                                $('.comment_count').remove();
+                            }
+                            const htmlstr2 = template('num', response);
+                            $('.comment_form').after(htmlstr2);
+
+                        }
+                    }
+                });
+            }
+            comment();
+            $('form').submit(function (e) {
+                e.preventDefault();
+                const fd = new FormData(this);
+                fd.append('articleId', id);
+                $.ajax({
+                    type: "post",
+                    url: "http://localhost:8080/api/v1/index/post_comment",
+                    data: fd,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                    },
+                });
+            })
+        })
+    </script>
 </body>
 
 </html>
