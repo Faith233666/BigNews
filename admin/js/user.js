@@ -33,6 +33,7 @@ $(function () {
       processData: false,
       success: function (response) {
         if (response.code == 200) {
+          alert('修改成功');
           //修改父元素的头像
           if ($('.user_pic').prop('src') != window.parent.$('.user_info img').prop('src')) {
             //window.parent获取到iframe的父元素，更改父元素的图片

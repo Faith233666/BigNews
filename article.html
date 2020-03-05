@@ -244,17 +244,21 @@
             comment();
             $('form').submit(function (e) {
                 e.preventDefault();
-                const fd = new FormData(this);
-                fd.append('articleId', id);
                 $.ajax({
                     type: "post",
                     url: "http://localhost:8080/api/v1/index/post_comment",
-                    data: fd,
-                    contentType: false,
-                    processData: false,
+                    data: {
+                        author: $('.comment_name').val().trim(),
+                        content: $('.comment_input').val().trim(),
+                        articleId: id,
+                    },
                     dataType: "json",
                     success: function (response) {
-                        console.log(response);
+                        if (response.code == 201) {
+                            alert('发表成功');
+                            $('.comment_name').val('');
+                            $('.comment_input').val('');
+                        }
                     },
                 });
             })
